@@ -1,0 +1,31 @@
+{
+  "name": "devburger",
+  "version": "1.0.0",
+  "description": "Este projeto é uma aplicação fullstack que integra banco de dados relacionais, Docker e autenticação segura de senhas, utilizando ferramentas modernas no frontend com React. A plataforma permite que o cliente crie uma conta, faça login com segurança e navegue pela aplicação de forma intuitiva.",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Luiz Paulo",
+    "url": "https://github.com/LuizPauloJRM"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "pg": "^8.16.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "eslint": "^9.27.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.0",
+    "globals": "^16.2.0",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.5.3",
+    "sequelize-cli": "^6.6.3",
+    "sucrase": "^3.35.0"
+  }
+}
