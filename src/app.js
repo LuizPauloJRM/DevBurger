@@ -1,6 +1,6 @@
 import express from 'express'; // Importa o framework Express
 import routes from './routes'; // Importa as rotas definidas no arquivo routes.js
-
+import './database'; // Importa a configuração do banco de dados
 class App {
     constructor(){
         this.app = express();         // 1. Cria a aplicação express

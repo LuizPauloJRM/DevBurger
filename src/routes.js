@@ -1,9 +1,9 @@
-import { Router } from "express";
+import { Router } from 'express';
+import UserController from './app/controllers/UserController';
+
 
 const routes = new Router();
 
-routes.get('/', (req, res) => {
-    return res.json({ message: 'Hello World!' });
-});
+routes.post('/Users', UserController.store);
 
-export default routes; // Exporta as rotas definidas para serem usadas na aplicação principal
+export default routes;

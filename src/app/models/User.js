@@ -1,17 +1,20 @@
+import { Model, DataTypes } from "sequelize";
 
-import Sequelize , {Model} from "sequelize";
-class User extends Model {  //herdando metodo Model do Sequelize
-    static init(Sequelize) {
-        super.init({
-            name: Sequelize.STRING,
-            email: Sequelize.STRING,
-            password_hash: Sequelize.STRING,
-            admin: Sequelize.BOOLEAN,
-        },
-    {
-        sequelize,
-    }
+class User extends Model {
+  static init(sequelize) {
+    super.init(
+      {
+        name: DataTypes.STRING,
+        email: DataTypes.STRING,
+        password_hash: DataTypes.STRING,
+        admin: DataTypes.BOOLEAN,
+      },
+      {
+        sequelize, 
+        tableName: 'users', 
+      }
     );
-    }
+  }
 }
+
 export default User;
