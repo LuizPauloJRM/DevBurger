@@ -32,6 +32,15 @@ class UserController {
         try {
             // Extrai os dados enviados pelo cliente no corpo da requisição
             const { name, email, password_hash, admin } = req.body;
+            const userExists = await User.findOne({ where: { email } }); // Verifica se já existe um usuário com o mesmo email
+            if (userExists) {
+                // Se já existir um usuário com o mesmo email, retorna erro 400 (Bad Request)
+                return resp.status(400).json({
+                    error: "Usuário já existe",
+                    message: "Já existe um usuário cadastrado com este email",
+                });
+                console.log("Usuário já existe:", userExists);
+            }
 
             // Cria um novo usuário no banco de dados com os dados recebidos
             const user = await User.create({
