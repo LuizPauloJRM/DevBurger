@@ -9,10 +9,26 @@
 // Controller para conectar com o banco de dados e manipular os dados dos usuários
 import User from "../models/User"; // Importa o model User (estrutura do usuário no banco)
 import { v4 } from "uuid"; // Importa a função v4 do pacote uuid para gerar IDs únicos
-
+import * as Yup from "yup"; // Importa o Yup para validação de dados
 class UserController {
     // Método para cadastrar um novo usuário no banco de dados
     async store(req, resp) {
+        const schema = Yup.object({
+            name: Yup.string().required(), // Nome do usuário é obrigatório
+            email: Yup.string().email().required(), // Email deve ser um email válido e é obrigatório
+            password_hash: Yup.string().required(), // Senha (hash) é obrigatória
+            admin: Yup.boolean().default(false), // Campo admin é booleano, padrão é false
+        });
+        const validation = schema.isValid(req.body); // Valida os dados recebidos no corpo da requisição
+        console.log("Validação do usuário:", validation); // Exibe o resultado da validação no console
+        if (!validation) {
+            // Se a validação falhar, retorna erro 400 (Bad Request) com mensagem de erro
+            return resp.status(400).json({
+                error: "Erro de validação",
+                message: "Dados inválidos ou ausentes",
+            });
+        }
+
         try {
             // Extrai os dados enviados pelo cliente no corpo da requisição
             const { name, email, password_hash, admin } = req.body;
