@@ -46,5 +46,12 @@ module.exports = {
  * Courses
  * id
  * name
- * 
+ * duration
+ */
+//Relacionamentos
+/**
+ * referencia do id category_id
+ * 1:1 -> 1 para uma 
+ * 1:N -> 1 produto com uma categoria , 1 categoria para varias 
+ * N:N -> muitos para muitos ,usuarios para mais de um cursos e um cursos varios usuarios da mesma entidade 
  */
