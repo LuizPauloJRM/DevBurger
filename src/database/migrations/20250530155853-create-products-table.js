@@ -41,3 +41,10 @@ module.exports = {
     await queryInterface.dropTable('products');
   },
 };
+
+/**
+ * Courses
+ * id
+ * name
+ * 
+ */
