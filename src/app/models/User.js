@@ -26,7 +26,7 @@ class User extends Model {
   }
 
   // Método de instância para validar senha no login
-  checkPassword(password) {
+  async checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
   }
 }
