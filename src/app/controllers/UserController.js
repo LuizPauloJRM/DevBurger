@@ -32,6 +32,26 @@ class UserController {
         }*/
         const { name, email, password, admin } = request.body;
 
+        const userExists = await User.findOne({
+            where: {
+                email,
+            }
+        });
+
+        /**
+         * null 
+         * undefined 
+         * ""
+         * 0 , false 
+         * {} ,[] , 1 true
+         */
+
+        if (userExists) {
+            return response.status(400).json({ error: 'User already exists' });
+        }
+
+        //console.log(userExists);
+
 
         //try{
         const user = await User.create({
