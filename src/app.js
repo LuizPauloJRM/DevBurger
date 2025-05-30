@@ -1,19 +1,35 @@
 import express from 'express'; // Importa o framework Express
 import routes from './routes'; // Importa as rotas definidas no arquivo routes.js
 import './database'; // Importa a configuração do banco de dados
+
 class App {
-    constructor(){
+    constructor() {
         this.app = express();         // 1. Cria a aplicação express
-        this.middlewares();          // 2. Configura os middlewares
-        this.routes();               // 3. Configura as rotas
+        this.middlewares();           // 2. Configura os middlewares
+        this.routes();                // 3. Configura as rotas
+        this.exceptionHandler();      // 4. Configura o tratamento global de erros
     }
 
-    middlewares(){
+    middlewares() {
         this.app.use(express.json()); // Middleware que permite a leitura de JSON no corpo das requisições
+
+        // Descomente se precisar liberar CORS para frontend externo
+        // import cors from 'cors';
+        // this.app.use(cors());
     }
 
-    routes(){
+    routes() {
         this.app.use(routes);         // Usa as rotas definidas no arquivo routes.js
+    }
+
+    exceptionHandler() {
+        // Middleware para tratamento global de erros (opcional)
+        this.app.use((err, req, res, next) => {
+            if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+                return res.status(400).json({ error: 'Invalid JSON' });
+            }
+            return res.status(500).json({ error: 'Internal server error' });
+        });
     }
 }
 

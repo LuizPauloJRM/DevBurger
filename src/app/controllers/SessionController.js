@@ -1,5 +1,7 @@
 import * as Yup from 'yup'; // Importa a biblioteca Yup para validação de dados
 import User from '../models/User'; // Importa o model User para consultar o banco de dados
+import { where } from 'sequelize';
+import { response } from 'express';
 
 class SessionController {
     // Método responsável por realizar o login do usuário
@@ -13,7 +15,7 @@ class SessionController {
         // Verifica se os dados enviados na requisição estão de acordo com o esquema
         const isValid = await schema.isValid(req.body);
         if (!isValid) {
-            return resp.status(400).json({ error: 'Validation fails' }); // Retorna erro se a validação falhar
+            return resp.status(401).json({ error: 'Validation fails' }); // Retorna erro se a validação falhar
         }
 
         // Desestrutura o email e a senha do corpo da requisição
@@ -27,7 +29,10 @@ class SessionController {
             return resp.status(401).json({ error: 'User not found' });
         }
 
-        // Verifica se a senha informada bate com a senha do usuário (usando método do model)
+        const isSamePassword = user.comparePassword(password);
+        console.log(isSamePassword);
+        return response.json({ message: 'session' });
+        /*// Verifica se a senha informada bate com a senha do usuário (usando método do model)
         const passwordMatch = await user.checkPassword(password);
         if (!passwordMatch) {
             return resp.status(401).json({ error: 'Password does not match' }); // Senha incorreta
@@ -41,7 +46,7 @@ class SessionController {
                 name: user.name,
                 email: user.email,
             }
-        });
+        });*/
     }
 }
 

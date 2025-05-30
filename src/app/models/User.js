@@ -1,25 +1,24 @@
-import { Model, DataTypes } from "sequelize";
+import { Model, Sequelize } from "sequelize";
 import bcrypt from "bcrypt";
 
 class User extends Model {
-  static init(sequelize) {
+  static init(sequelize) {//Campos do banco 
     super.init(
       {
-        name: DataTypes.STRING,
-        email: DataTypes.STRING,
-        password: DataTypes.VIRTUAL,         // Não vai para o banco
-        password: DataTypes.STRING,     // Vai com a senha criptografada
-        admin: DataTypes.BOOLEAN,
+        name: Sequelize.STRING,
+        email: Sequelize.STRING,
+        password: Sequelize.VIRTUAL,
+        password_hash: Sequelize.STRING,
+        admin: Sequelize.BOOLEAN,
       },
       {
         sequelize,
-        tableName: 'users',
-      }
+      },
     );
 
     this.addHook('beforeSave', async (user) => {
       if (user.password) {
-        user.password_hash = await bcrypt.hash(user.password, 8); // CORRETO AQUI
+        user.password_hash = await bcrypt.hash(user.password, 10);
       }
     });
 
@@ -33,3 +32,4 @@ class User extends Model {
 }
 
 export default User;
+
