@@ -1,6 +1,8 @@
 import express from 'express'; // Importa o framework Express
 import routes from './routes'; // Importa as rotas definidas no arquivo routes.js
 import './database'; // Importa a configuração do banco de dados
+import { resolve } from 'node:path';
+import cors from 'cors'; // <-- Adicione esta linha
 
 class App {
     constructor() {
@@ -12,10 +14,8 @@ class App {
 
     middlewares() {
         this.app.use(express.json()); // Middleware que permite a leitura de JSON no corpo das requisições
-
-        // Descomente se precisar liberar CORS para frontend externo
-        // import cors from 'cors';
-        // this.app.use(cors());
+        this.app.use('/product-file', express.static(resolve(__dirname, '..', 'uploads')));
+        this.app.use(cors());
     }
 
     routes() {

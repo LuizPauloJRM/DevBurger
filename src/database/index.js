@@ -1,8 +1,11 @@
 import { Sequelize } from "sequelize"; // Importando Sequelize
 import User from "../app/models/User";// Importando o modelo User
 import configDatabase from "../config/database"; // Arquivo que deve exportar as configs do banco
+import Product from "../app/models/Product";// Exportando model product
 
-const models = [User];// Lista de modelos que serão inicializados
+
+
+const models = [User, Product];// Lista de modelos que serão inicializados
 
 class Database {// Classe Database para gerenciar a conexão com o banco de dados
     constructor() {
