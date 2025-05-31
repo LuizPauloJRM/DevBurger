@@ -14,7 +14,11 @@ class Database {// Classe Database para gerenciar a conexão com o banco de dado
 
     init() {// Método para inicializar a conexão com o banco de dados e os modelos
         this.connection = new Sequelize(configDatabase); // Passando as configs corretamente
-        models.forEach(model => model.init(this.connection)); // Iniciando os models
+        models
+            .map((model) => model.init(this.connection))
+            .map(
+                (model) => model.associate && model.associate(this.connection.models),
+            );
     }
 }
 
