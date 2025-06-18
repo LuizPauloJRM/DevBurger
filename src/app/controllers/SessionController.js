@@ -7,7 +7,7 @@ class SessionController {
         const schema = Yup.object({
             name: Yup.string().required(),
             email: Yup.string().email().required(),
-            password: Yup.string().min(6).required(), // CORRETO
+            password: Yup.string().min(6).required(),
             admin: Yup.boolean(),
         });
         const isValid = await schema.isValid(request.body);

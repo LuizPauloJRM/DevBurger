@@ -2,7 +2,7 @@ import express from 'express'; // Importa o framework Express
 import routes from './routes'; // Importa as rotas definidas no arquivo routes.js
 import './database'; // Importa a configuração do banco de dados
 import { resolve } from 'node:path';
-import cors from 'cors'; // <-- Adicione esta linha
+import cors from 'cors';
 
 class App {
     constructor() {
