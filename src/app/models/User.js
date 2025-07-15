@@ -2,18 +2,23 @@ import { Model, Sequelize } from "sequelize";
 import bcrypt from "bcrypt";
 
 class User extends Model {
-  static init(sequelize) {//Campos do banco 
+  static init(sequelize) {
     super.init(
       {
         name: Sequelize.STRING,
         email: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
-        admin: Sequelize.BOOLEAN,
+        admin: {
+          type: Sequelize.BOOLEAN,
+          defaultValue: false,
+        },
       },
       {
         sequelize,
-      },
+        modelName: 'User',
+        tableName: 'users',
+      }
     );
 
     this.addHook('beforeSave', async (user) => {
@@ -25,11 +30,9 @@ class User extends Model {
     return this;
   }
 
-  // Método de instância para validar senha no login
   async checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
   }
 }
 
 export default User;
-
