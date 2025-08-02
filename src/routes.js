@@ -5,7 +5,7 @@ import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import ProductController from './app/controllers/ProductController';
 import CategoryController from './app/controllers/CategoryController';
-import authMiddleware from './middlewares/auth';
+import authMiddleware from './app/middlewares/auth';
 //import User from './app/models/User';
 
 
