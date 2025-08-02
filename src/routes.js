@@ -1,30 +1,38 @@
 import { Router } from 'express';
 import multer from 'multer';
-import multerConfig from './config/multer'
-import UserController from './app/controllers/UserController';
-import SessionController from './app/controllers/SessionController';
+import multerConfig from './config/multer';
+
 import ProductController from './app/controllers/ProductController';
+import SessionController from './app/controllers/SessionController';
 import CategoryController from './app/controllers/CategoryController';
+import UserController from './app/controllers/UserController';
+import OrderController from './app/controllers/OrderController';
+import CreatePaymentIntentController from './app/controllers/stripe/CreatePaymentIntentController';
+
 import authMiddleware from './app/middlewares/auth';
-//import User from './app/models/User';
-
-
-const routes = new Router();
 
 const upload = multer(multerConfig);
 
-routes.post('/users', UserController.store);             // Criar usuário
-routes.post('/session', SessionController.store); // Login de usuário 
+const routes = new Router();
 
-routes.use(authMiddleware);//Rotas com token
-routes.post('/products', upload.single('file'), ProductController.store);// Products
+routes.post('/users', UserController.store); // Cadastro
+
+routes.post('/sessions', SessionController.store); // Login
+
+routes.use(authMiddleware); // será chamado por todas as rotas ABAIXO
+
+routes.post('/products', upload.single('file'), ProductController.store);
 routes.get('/products', ProductController.index);
+routes.put('/products/:id', upload.single('file'), ProductController.update);
 
-routes.post('/categories', CategoryController.store);// Category
+routes.post('/categories', upload.single('file'), CategoryController.store);
 routes.get('/categories', CategoryController.index);
+routes.put('/categories/:id', upload.single('file'), CategoryController.update);
+
+routes.post('/orders', OrderController.store);
+routes.put('/orders/:id', OrderController.update);
+routes.get('/orders', OrderController.index);
+
+routes.post('/create-payment-intent', CreatePaymentIntentController.store);
 
 export default routes;
-
-
-
-//request-> middleware -> controller -> model -> database -> response
